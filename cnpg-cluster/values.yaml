@@ -11,7 +11,7 @@ cluster:
         name: app-secret
 
   backups:
-    enabled: false
+    enabled: true
     provider: s3
     secret:
       create: true
