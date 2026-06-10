@@ -1,0 +1,53 @@
+type: postgresql
+mode: standalone
+
+cluster:
+  instances: 1
+
+backups:
+  enabled: true
+  provider: s3
+  secret:
+    create: true
+    name: backup-secret
+  s3:
+    region: "eu-west-1"
+    bucket: "cnpg-test"
+    path: "/backups"
+  scheduledBackups:
+    - name: daily-backup # Daily at midnight
+      schedule: "0 0 0 * * *" # Daily at midnight
+      backupOwnerReference: self
+  retentionPolicy: "30d"
+
+# type: postgresql
+# mode: recovery
+
+# recovery:
+#   method: object_store
+#   clusterName: "daily-backup"
+#   provider: s3
+#   s3:
+#     region: "eu-west-1"
+#     bucket: "cnpg-test"
+#     path: "/backups"
+#     accessKey: ""
+#     secretKey: ""
+
+# cluster:
+#   instances: 1
+
+# backups:
+#   endpointURL: "https://s3.openshift-storage.svc:443"
+#   provider: s3
+#   s3:
+#     region: "eu-west-1"
+#     bucket: "cnpg-test"
+#     path: "/backups"
+#     accessKey: ""
+#     secretKey: ""
+#   scheduledBackups:
+#     - name: daily-backup # Daily at midnight
+#       schedule: "0 0 0 * * *" # Daily at midnight
+#       backupOwnerReference: self
+#   retentionPolicy: "30d"
