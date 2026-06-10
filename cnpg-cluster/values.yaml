@@ -1,24 +1,30 @@
-type: postgresql
-mode: standalone
+cluster:  
+  type: postgresql
+  mode: standalone
 
-cluster:
-  instances: 1
+  cluster:
+    instances: 1
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: app-secret
 
-backups:
-  enabled: true
-  provider: s3
-  secret:
-    create: true
-    name: backup-secret
-  s3:
-    region: "eu-west-1"
-    bucket: "cnpg-test"
-    path: "/backups"
-  scheduledBackups:
-    - name: daily-backup # Daily at midnight
-      schedule: "0 0 0 * * *" # Daily at midnight
-      backupOwnerReference: self
-  retentionPolicy: "30d"
+  backups:
+    enabled: false
+    provider: s3
+    secret:
+      create: true
+      name: backup-secret
+    s3:
+      region: "eu-west-1"
+      bucket: "cnpg-test"
+      path: "/backups"
+    scheduledBackups:
+      - name: daily-backup # Daily at midnight
+        schedule: "0 0 0 * * *" # Daily at midnight
+        backupOwnerReference: self
+    retentionPolicy: "30d"
 
 # type: postgresql
 # mode: recovery
