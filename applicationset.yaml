@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cnpg-test
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - chart: cert-man
+          - chart: cnpg-operator
+          - chart: cnpg-barman
+          - chart: cnpg-cluster
+  template:
+    metadata:
+      name: "{{chart}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/svanengelen-ilionx/sandbox-cnpg-test.git
+        targetRevision: HEAD
+        path: "{{chart}}"
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: cnpg
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
