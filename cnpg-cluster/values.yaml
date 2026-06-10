@@ -14,7 +14,7 @@ cluster:
     enabled: true
     provider: s3
     secret:
-      create: true
+      create: false
       name: backup-secret
     s3:
       region: "eu-west-1"
