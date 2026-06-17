@@ -13,6 +13,7 @@ cluster:
   backups:
     enabled: true
     provider: s3
+    endpointURL: "https://s3.openshift-storage.svc:443"
     secret:
       create: false
       name: backup-secret
