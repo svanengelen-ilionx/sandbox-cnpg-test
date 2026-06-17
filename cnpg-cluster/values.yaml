@@ -3,7 +3,7 @@ cluster:
   mode: standalone
 
   cluster:
-    instances: 1
+    instances: 3
     initdb:
       database: app
       owner: app
